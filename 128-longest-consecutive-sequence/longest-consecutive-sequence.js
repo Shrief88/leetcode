@@ -7,27 +7,25 @@ var longestConsecutive = function(nums) {
         return 0;
     }
 
-    let map = new Map();
+    let set = new Set();
 
     for(let i=0;i<nums.length ; i++){
-        map.set(nums[i],i);
+        set.add(nums[i]);
     }
 
     let curLongest = 1;
     let bestLongest = 1;
-    let set = new Set();
+    let starterPoints = new Set();
 
-    for(let i=0 ; i<nums.length ; i++){
-        if(map.has(nums[i] + 1) && !map.has(nums[i] -1)){
-            set.add(i);
-        }
+    for(let i=0;i<nums.length ; i++){
+        if(set.has(nums[i] + 1) && !set.has(nums[i] -1)){
+            starterPoints.add(i);
+        } 
     }
 
-    let starterPoints = [...set];
-
-    for(let i = 0 ; i<starterPoints.length ; i++){
+    starterPoints.forEach(point => {
         let j = 1;
-        while(map.has(nums[starterPoints[i]] + j)){
+        while(set.has(nums[point] + j)){
             curLongest++;
             j++;
         }
@@ -35,7 +33,7 @@ var longestConsecutive = function(nums) {
             bestLongest = curLongest;
         }
         curLongest = 1;
-    }
+    })
 
     return bestLongest;
 };
