@@ -3,59 +3,25 @@
  * @return {number}
  */
 var romanToInt = function(s) {
-    const sol = [];
+    const map = new Map();
 
+    map.set("I" , 1);
+    map.set("V" , 5);
+    map.set("X", 10)
+    map.set("L" , 50);
+    map.set("C" , 100);
+    map.set("D", 500)
+    map.set("M" , 1000);
+
+    let sum = 0;
 
     for(let i=0 ; i<s.length ; i++){
-        if(s[i] === 'I' && s[i] !== s.length-1){
-            if(s[i+1] === "X"){
-                sol.push(9);
-                i++;
-            }
-            else if(s[i+1] === 'V'){
-                sol.push(4);
-                i++;
-            }else{
-                sol.push(1);
-            }
-        }else if(s[i] === 'X' && s[i] !== s.length-1){
-            if(s[i+1] === "C"){
-                sol.push(90);
-                i++;
-            }
-            else if(s[i+1] === 'L'){
-                sol.push(40);
-                i++;
-            }else{
-                sol.push(10)
-            }
-        }else if(s[i] === 'C' && s[i] !== s.length-1){
-            if(s[i+1] === "M"){
-                sol.push(900);
-                i++
-            }
-            else if(s[i+1] === 'D'){
-                sol.push(400);
-                i++;
-            }else{
-                sol.push(100);
-            }
-        }else if(s[i] === 'V'){
-            sol.push(5);
-        }else if(s[i] === 'L'){
-            sol.push(50);
-        }else if (s[i] === 'M'){
-            sol.push(1000);
+        if(map.get(s[i]) < map.get(s[i+1])){
+            sum -= map.get(s[i]);
         }else{
-            sol.push(500);
+            sum += map.get(s[i]);
         }
     }
 
-    let sum =0;
-    for(let i=0; i<sol.length ; i++){
-        sum += sol[i];
-    }
-
-    console.log(sol);
     return sum;
 };
